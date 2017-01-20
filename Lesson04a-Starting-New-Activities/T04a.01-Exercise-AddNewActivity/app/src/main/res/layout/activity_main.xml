@@ -13,6 +13,7 @@
     tools:context=".MainActivity">
 
     <EditText
+        android:inputType="text"
         android:id="@+id/et_text_entry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
