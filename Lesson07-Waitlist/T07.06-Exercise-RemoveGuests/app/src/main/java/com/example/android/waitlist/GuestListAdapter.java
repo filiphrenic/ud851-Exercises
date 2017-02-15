@@ -19,8 +19,9 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
 
     /**
      * Constructor using the context and the db cursor
+     *
      * @param context the calling context/activity
-     * @param cursor the db cursor with waitlist data to display
+     * @param cursor  the db cursor with waitlist data to display
      */
     public GuestListAdapter(Context context, Cursor cursor) {
         this.mContext = context;
@@ -38,19 +39,22 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
     @Override
     public void onBindViewHolder(GuestViewHolder holder, int position) {
         // Move the mCursor to the position of the item to be displayed
-        if (!mCursor.moveToPosition(position))
+        if (!mCursor.moveToPosition(position)) {
             return; // bail if returned null
+        }
 
         // Update the view holder with the information needed to display
         String name = mCursor.getString(mCursor.getColumnIndex(WaitlistContract.WaitlistEntry.COLUMN_GUEST_NAME));
         int partySize = mCursor.getInt(mCursor.getColumnIndex(WaitlistContract.WaitlistEntry.COLUMN_PARTY_SIZE));
-        // TODO (6) Retrieve the id from the cursor and
+        // COMPLETED (6) Retrieve the id from the cursor and
+        long id = mCursor.getLong(mCursor.getColumnIndex(WaitlistContract.WaitlistEntry._ID));
 
         // Display the guest name
         holder.nameTextView.setText(name);
         // Display the party count
         holder.partySizeTextView.setText(String.valueOf(partySize));
-        // TODO (7) Set the tag of the itemview in the holder to the id
+        // COMPLETED (7) Set the tag of the itemview in the holder to the id
+        holder.itemView.setTag(id);
     }
 
 
@@ -67,7 +71,9 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
      */
     public void swapCursor(Cursor newCursor) {
         // Always close the previous mCursor first
-        if (mCursor != null) mCursor.close();
+        if (mCursor != null) {
+            mCursor.close();
+        }
         mCursor = newCursor;
         if (newCursor != null) {
             // Force the RecyclerView to refresh
